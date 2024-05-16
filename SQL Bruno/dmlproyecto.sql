@@ -12,6 +12,7 @@ values
 --Insertamos datos en la tabla Mpais
 insert into proyecto.mpais (id_p, pais)
 values
+	(1, 'Argentina'),
 	(1, 'Estados Unidos'),
 	(2, 'Estados Unidos'),
 	(3, 'Estados Unidos'),
@@ -21,105 +22,106 @@ values
 	(7, 'Estados Unidos');
 
 --Insertamos datos en la tabla Persona
-insert into proyecto.persona (nombre, nacionalidad)
+insert into proyecto.persona (dni, nombre, nacionalidad)
 values
-	('Tom Holland', 'Inglaterra'),
-	('Zendaya', 'Estados Unidos'),
-	('Jake Gyllenhaal', 'Estados Unidos'),
-	('Tobey Maguire', 'Estados Unidos'),
-	('Kirsten Dunst', 'Estados Unidos'),
-	('Andrew Garfield', 'Estados Unidos'),
-	('Emma Stone', 'Estados Unidos'),
-	('Willem Dafoe', 'Estados Unidos'),
-	('Alfred Molina', 'Estados Unidos'),
-	('Shameik Moore', 'Estados Unidos'),
-	('Bob Persichetti', 'Estados Unidos'),
-	('Peter Ramsey', 'Estados Unidos'),
-	('Rodney Rothman', 'Estados Unidos'),
-	('Jon Watts', 'Estados Unidos'),
-	('Sam Raimi', 'Estados Unidos'),
-	('James Franco', 'Estados Unidos'),
-	('Hailee Steinfeld', 'Estados Unidos'),
-	('Mahershala Ali', 'Estados Unidos'),
-	('Liev Schreiber', 'Estados Unidos');
+	(1, 'Tom Holland', 'Inglaterra'),
+	(2, 'Zendaya', 'Estados Unidos'),
+	(3, 'Jake Gyllenhaal', 'Estados Unidos'),
+	(4, 'Tobey Maguire', 'Estados Unidos'),
+	(5, 'Kirsten Dunst', 'Estados Unidos'),
+	(6, 'Andrew Garfield', 'Estados Unidos'),
+	(7, 'Emma Stone', 'Estados Unidos'),
+	(8, 'Willem Dafoe', 'Estados Unidos'),
+	(9, 'Alfred Molina', 'Estados Unidos'),
+	(10, 'Shameik Moore', 'Estados Unidos'),
+	(11, 'Bob Persichetti', 'Estados Unidos'),
+	(12, 'Peter Ramsey', 'Estados Unidos'),
+	(13, 'Rodney Rothman', 'Estados Unidos'),
+	(14, 'Jon Watts', 'Estados Unidos'),
+	(15, 'Sam Raimi', 'Estados Unidos'),
+	(16, 'James Franco', 'Estados Unidos'),
+	(17, 'Hailee Steinfeld', 'Estados Unidos'),
+	(18, 'Mahershala Ali', 'Estados Unidos'),
+	(19, 'Liev Schreiber', 'Estados Unidos');
 
 --Insertamos datos en la tabla Actores
-insert into proyecto.actores (nombre, cant_a)
+insert into proyecto.actores (dni, cant_a)
 values
-	('Tom Holland', 0),
-	('Zendaya', 0),
-	('Jake Gyllenhaal', 0),
-	('Tobey Maguire', 0),
-	('Kirsten Dunst', 0),
-	('Andrew Garfield', 0),
-	('Emma Stone', 0),
-	('Willem Dafoe', 0),
-	('Alfred Molina', 0),
-	('Shameik Moore', 0),
-	('James Franco', 0),
-	('Hailee Steinfeld', 0),
-	('Mahershala Ali', 0),
-	('Liev Schreiber', 0);
+	(1, 0),
+	(2, 0),
+	(3, 0),
+	(4, 0),
+	(5, 0),
+	(6, 0),
+	(7, 0),
+	(8, 0),
+	(9, 0),
+	(10, 0),
+	(16, 0),
+	(17, 0),
+	(18, 0),
+	(19, 0);
 
 --Insertamos datos en la tabla Directores
-insert into proyecto.directores (nombre, cant_d)
+insert into proyecto.directores (dni, cant_d)
 values
-	('Bob Persichetti', 0),
-	('Peter Ramsey', 0),
-	('Rodney Rothman', 0),
-	('Jon Watts', 0),
-	('Sam Raimi', 0);
+	(1, 0),
+	(11, 0),
+	(12, 0),
+	(13, 0),
+	(14, 0),
+	(15, 0);
 
 --Insertamos datos en la tabla Protagoniza
-insert into proyecto.protagoniza (id_p, nombre)
+insert into proyecto.protagoniza (id_p, dni)
 values
-	(1, 'Shameik Moore'),
-	(2, 'Tom Holland'),
-	(2, 'Zendaya'),
-	(3, 'Tom Holland'),
-	(3, 'Zendaya'),
-	(3, 'Jake Gyllenhaal'),
-	(4, 'Tobey Maguire'),
-	(4, 'Kirsten Dunst'),
-	(5, 'Tobey Maguire'),
-	(5, 'Kirsten Dunst'),
-	(6, 'Tobey Maguire'),
-	(6, 'Kirsten Dunst'),
-	(6, 'James Franco'),
-	(7, 'Tom Holland'),
-	(7, 'Zendaya'),
-	(7, 'Alfred Molina');
+	(1, 10), -- Shameik Moore
+	(2, 1),  -- Tom Holland
+	(2, 2),  -- Zendaya
+	(3, 1),  -- Tom Holland
+	(3, 2),  -- Zendaya
+	(3, 3),  -- Jake Gyllenhaal
+	(4, 4),  -- Tobey Maguire
+	(4, 5),  -- Kirsten Dunst
+	(5, 4),  -- Tobey Maguire
+	(5, 5),  -- Kirsten Dunst
+	(6, 4),  -- Tobey Maguire
+	(6, 5),  -- Kirsten Dunst
+	(6, 16), -- James Franco
+	(7, 1),  -- Tom Holland
+	(7, 2),  -- Zendaya
+	(7, 9);  -- Alfred Molina
 
 --Insertamos datos en la tabla Dirige
-insert into proyecto.dirige (id_p, nombre)
+insert into proyecto.dirige (id_p, dni)
 values
-	(1, 'Bob Persichetti'),
-	(1, 'Peter Ramsey'),
-	(1, 'Rodney Rothman'),
-	(2, 'Jon Watts'),
-	(4, 'Sam Raimi'),
-	(5, 'Sam Raimi'),
-	(6, 'Sam Raimi'),
-	(7, 'Jon Watts');
+	(1, 11), -- Bob Persichetti
+	(1, 12), -- Peter Ramsey
+	(1, 13), -- Rodney Rothman
+	(2, 14), -- Jon Watts
+	(4, 15), -- Sam Raimi
+	(5, 15), -- Sam Raimi
+	(6, 15), -- Sam Raimi
+	(7, 14); -- Jon Watts
 
 --Insertamos datos en la tabla Reparto
-insert into proyecto.reparto (id_p, nombre)
+insert into proyecto.reparto (id_p, dni)
 values
-	(1, 'Hailee Steinfeld'),
-	(1, 'Mahershala Ali'),
-	(1, 'Liev Schreiber'),
-	(2, 'Zendaya'),
-	(3, 'Zendaya'),
-	(3, 'Jake Gyllenhaal'),
-	(4, 'Willem Dafoe'),
-	(4, 'James Franco'),
-	(5, 'Alfred Molina'),
-	(5, 'James Franco'),
-	(6, 'James Franco'),
-	(7, 'Willem Dafoe'),
-	(7, 'Andrew Garfield'),
-	(7, 'Tobey Maguire'),
-	(7, 'Emma Stone');
+	(1, 17), -- Hailee Steinfeld
+	(1, 18), -- Mahershala Ali
+	(1, 19), -- Liev Schreiber
+	(2, 2),  -- Zendaya
+	(3, 2),  -- Zendaya
+	(3, 3),  -- Jake Gyllenhaal
+	(4, 8),  -- Willem Dafoe
+	(4, 16), -- James Franco
+	(5, 9),  -- Alfred Molina
+	(5, 16), -- James Franco
+	(6, 16), -- James Franco
+	(7, 8),  -- Willem Dafoe
+	(7, 6),  -- Andrew Garfield
+	(7, 4),  -- Tobey Maguire
+	(7, 7);  -- Emma Stone
 
 --Insertamos datos en la tabla Cine
 insert into proyecto.cine (nom_cine, telefono, direccion)

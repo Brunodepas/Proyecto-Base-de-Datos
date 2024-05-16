@@ -1,0 +1,29 @@
+a-
+select dni, nombre, nacionalidad from proyecto.persona natural join proyecto.actores where (cant_a = 1);
+
+b-	
+select dni, nombre, nacionalidad from proyecto.persona natural join 
+	(select * from proyecto.actores natural join  proyecto.directores) as t1;
+
+c-
+select * from proyecto.cine natural join 
+	(select nom_cine, sum(cant_butacas) as cant_butacas from proyecto.salas group by nom_cine) as t1;
+
+d-
+
+Listar los actores que protagonizan al menos dos peliculas del genero "Acción".
+select * from proyecto.persona natural join 
+	(select distinct t2.dni from 
+		(select * from proyecto.protagoniza natural join 
+			(select id_p from proyecto.peliculas where (genero = 'Acción')) as t1) as t2,
+		(select * from proyecto.protagoniza natural join 
+			(select id_p from proyecto.peliculas where (genero = 'Acción')) as t3) as t4 
+	where (t2.id_p != t4.id_p and t2.dni = t4.dni)) as t5;
+
+Listar los cines que tienen mas 5 salas.
+select * from proyecto.cine natural join 
+	(select nom_cine from proyecto.salas group by nom_cine having count(num_sala) > 5) as t1;
+
+Listar las Peliculas donde al menos uno de los paises de origen sea "Argentina".
+select * from proyecto.peliculas natural join 
+	(select id_p from proyecto.mpais where (pais = 'Argentina')) as t1;
