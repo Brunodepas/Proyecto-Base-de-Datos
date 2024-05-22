@@ -13,30 +13,29 @@ public class programaProyecto {
     public static void main(String[] args) {
         Connection conexion = null;
         try {
-            // Cargo el controlador JDBC
-            Class.forName("org.postgresql.Driver");
-    
             // Cargo los datos necesarios para conectarme a la base de datos que quiero
+            String driver = "";
             String base_de_datos = "";
             String user = "";
             String pass = "";
-            try {
-                FileReader archivo = new FileReader("datos.txt");
-                BufferedReader br = new BufferedReader(archivo);
-                base_de_datos = br.readLine();
-                user = br.readLine();
-                pass = br.readLine();
-                br.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-    
+            FileReader archivo = new FileReader("datos.txt");
+            BufferedReader br = new BufferedReader(archivo);
+            driver = br.readLine();
+            base_de_datos = br.readLine();
+            user = br.readLine();
+            pass = br.readLine();
+            br.close();
+
+            // Cargo el controlador JDBC
+            Class.forName(driver);
+            
             // Me conecto a la base de datos
             conexion = DriverManager.getConnection("jdbc:postgresql://" + base_de_datos, user, pass);
     
             int opcion;
             Scanner entrada = new Scanner(System.in);
-    
+
+            // Menu con las diferentes opciones
             do {
                 System.out.println("Menú:");
                 System.out.println("1. Cargar un Cine");
@@ -48,12 +47,12 @@ public class programaProyecto {
             
                 opcion = entrada.nextInt();
                 Scanner e = new Scanner(System.in);
-                String consulta;
+                String consulta = "";
                 PreparedStatement enviador;
                 ResultSet resultado;
-                String nom_cine;
-                String telefono;
-                String direccion;
+                String nom_cine = "";
+                String telefono = "";
+                String direccion = "";
                 int num_sala;
                 int cant_butacas;
                 switch(opcion) {
@@ -79,7 +78,7 @@ public class programaProyecto {
                         cant_butacas = e.nextInt();
                         e.nextLine();
                         cines(conexion);
-                        System.out.print("Ingrese el cine al que pertenece la sala (tiene que ser uno de los de arriba): ");
+                        System.out.print("Ingrese el nombre del cine al que pertenece la sala (tiene que ser uno de los de arriba): ");
                         nom_cine = e.nextLine();
     
                         consulta = "insert into proyecto.salas (num_sala, cant_butacas, nom_cine) values (" + num_sala + ", " + cant_butacas + ", '" + nom_cine + "')";
@@ -94,33 +93,36 @@ public class programaProyecto {
                         enviador = conexion.prepareStatement(consulta);
                         resultado = enviador.executeQuery();
                         while (resultado.next()) {
-                            nom_cine = resultado.getString("nom_cine");
+                            if (nom_cine.compareTo(resultado.getString("nom_cine")) != 0) {
+                                nom_cine = resultado.getString("nom_cine");
+                                System.out.println("Cine: " + nom_cine + "\n");
+                            }
                             num_sala = resultado.getInt("num_sala");
-                            System.out.println("Cine: " + nom_cine + " | Numero de Sala: " + num_sala);
+                            System.out.println("        Numero de Sala: " + num_sala + "\n");
                         }
                         break;
                     case 5:
                         System.out.println("Saliendo del programa...");
                         e.close();
                         break;
-                    default:
+                        default:
                         System.out.println("Opción inválida. Por favor, selecciona una opción válida.");
-                }
-            } while (opcion != 5);
-            entrada.close();
-    
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+                    }
+                } while (opcion != 5);
+                entrada.close();
+                conexion.close();
+        } 
+        catch (ClassNotFoundException cnfe) {
+            //cnfe.printStackTrace();
+            System.err.println("Error cargando el driver: " + cnfe);
         }
-        finally {
-            // Cierro la conexión
-            try {
-                if (conexion != null) {
-                    conexion.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        catch (SQLException sqle) {
+            //sqle.printStackTrace();
+            System.err.println("Error de conexion con: " + sqle);
+        }
+        catch (IOException a) {
+            //a.printStackTrace();
+            System.err.println("Error leyendo el archivo: " + a);
         }
     }
 
@@ -128,18 +130,18 @@ public class programaProyecto {
         String consulta = "select * from proyecto.cine order by nom_cine";
         PreparedStatement enviador = conexion.prepareStatement(consulta);
         ResultSet resultado = enviador.executeQuery();
-        String cadena = "";
+        int i = 1;
 
+        System.out.println("Estos son los nombres de los cines cargados: ");
         while (resultado.next()) {
             String nom_cine = resultado.getString("nom_cine");
-            cadena += nom_cine + " | ";
+            System.out.println(i + "- " + nom_cine);
+            i++;
         }
-        System.out.println("Estos son los nombres de los cines cargados: ");
-        System.out.print(cadena + "\n");
     }
 
     private static void salas(Connection conexion) throws SQLException {
-        String consulta = "select * from proyecto.salas";
+        String consulta = "select num_sala from proyecto.salas";
         PreparedStatement enviador = conexion.prepareStatement(consulta);
         ResultSet resultado = enviador.executeQuery();
         String cadena = "";

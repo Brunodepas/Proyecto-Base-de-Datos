@@ -1,3 +1,4 @@
+org.postgresql.Driver
 localhost:5432/postgres
 postgres
 brunodepas2001
