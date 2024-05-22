@@ -9,38 +9,13 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class programaProyecto {
-    private static void cines(Connection conexion) throws SQLException {
-        String consulta = "select * from proyecto.cine";
-        PreparedStatement enviador = conexion.prepareStatement(consulta);
-        ResultSet resultado = enviador.executeQuery();
-        String cadena = "";
 
-        while (resultado.next()) {
-            String nom_cine = resultado.getString("nom_cine");
-            cadena += nom_cine + " | ";
-        }
-        System.out.println("Estos son los nombres de los cines cargados: ");
-        System.out.print(cadena + "\n");
-    }
-    private static void salas(Connection conexion) throws SQLException {
-        String consulta = "select * from proyecto.salas";
-        PreparedStatement enviador = conexion.prepareStatement(consulta);
-        ResultSet resultado = enviador.executeQuery();
-        String cadena = "";
-
-        while (resultado.next()) {
-            int num_sala = resultado.getInt("num_sala");
-            cadena += num_sala + " | ";
-        }
-        System.out.println("Estos son las salas cargadas: ");
-        System.out.print(cadena + "\n");
-    }
     public static void main(String[] args) {
         Connection conexion = null;
         try {
             // Cargo el controlador JDBC
             Class.forName("org.postgresql.Driver");
-
+    
             // Cargo los datos necesarios para conectarme a la base de datos que quiero
             String base_de_datos = "";
             String user = "";
@@ -55,13 +30,13 @@ public class programaProyecto {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
+    
             // Me conecto a la base de datos
             conexion = DriverManager.getConnection("jdbc:postgresql://" + base_de_datos, user, pass);
-
+    
             int opcion;
             Scanner entrada = new Scanner(System.in);
-
+    
             do {
                 System.out.println("Menú:");
                 System.out.println("1. Cargar un Cine");
@@ -90,7 +65,7 @@ public class programaProyecto {
                         telefono = e.nextLine();
                         System.out.print("Ingrese la direccion del cine: ");
                         direccion = e.nextLine();
-
+    
                         consulta = "insert into proyecto.cine (nom_cine, telefono, direccion) values ('" + nom_cine + "', '" + telefono + "', '" + direccion + "')";
                         enviador = conexion.prepareStatement(consulta);
                         enviador.executeUpdate();
@@ -106,7 +81,7 @@ public class programaProyecto {
                         cines(conexion);
                         System.out.print("Ingrese el cine al que pertenece la sala (tiene que ser uno de los de arriba): ");
                         nom_cine = e.nextLine();
-
+    
                         consulta = "insert into proyecto.salas (num_sala, cant_butacas, nom_cine) values (" + num_sala + ", " + cant_butacas + ", '" + nom_cine + "')";
                         enviador = conexion.prepareStatement(consulta);
                         enviador.executeUpdate();
@@ -115,7 +90,7 @@ public class programaProyecto {
                         cines(conexion);
                         break;
                     case 4:
-                        consulta = "select nom_cine, num_sala from proyecto.cine natural join proyecto.salas order by nom_cine";
+                        consulta = "select nom_cine, num_sala from proyecto.cine natural join proyecto.salas order by nom_cine, num_sala";
                         enviador = conexion.prepareStatement(consulta);
                         resultado = enviador.executeQuery();
                         while (resultado.next()) {
@@ -133,7 +108,7 @@ public class programaProyecto {
                 }
             } while (opcion != 5);
             entrada.close();
-
+    
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
@@ -147,6 +122,34 @@ public class programaProyecto {
                 e.printStackTrace();
             }
         }
+    }
+
+    private static void cines(Connection conexion) throws SQLException {
+        String consulta = "select * from proyecto.cine order by nom_cine";
+        PreparedStatement enviador = conexion.prepareStatement(consulta);
+        ResultSet resultado = enviador.executeQuery();
+        String cadena = "";
+
+        while (resultado.next()) {
+            String nom_cine = resultado.getString("nom_cine");
+            cadena += nom_cine + " | ";
+        }
+        System.out.println("Estos son los nombres de los cines cargados: ");
+        System.out.print(cadena + "\n");
+    }
+
+    private static void salas(Connection conexion) throws SQLException {
+        String consulta = "select * from proyecto.salas";
+        PreparedStatement enviador = conexion.prepareStatement(consulta);
+        ResultSet resultado = enviador.executeQuery();
+        String cadena = "";
+
+        while (resultado.next()) {
+            int num_sala = resultado.getInt("num_sala");
+            cadena += num_sala + " | ";
+        }
+        System.out.println("Estos son las salas cargadas: ");
+        System.out.print(cadena + "\n");
     }
 }
 

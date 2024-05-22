@@ -1,0 +1,2 @@
+javac programaProyecto.java
+java -classpath .:lib/postgresql-42.7.3.jar programaProyecto
