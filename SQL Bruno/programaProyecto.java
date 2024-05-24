@@ -70,10 +70,6 @@ public class programaProyecto {
                         enviador.executeUpdate();
                         break;
                     case 2:
-                        salas(conexion);
-                        System.out.print("Ingrese el numero de la sala (no se puede repetir con las de arriba): ");
-                        num_sala = e.nextInt();
-                        e.nextLine();
                         System.out.print("Ingrese la cantidad de butacas de la sala: ");
                         cant_butacas = e.nextInt();
                         e.nextLine();
@@ -81,15 +77,25 @@ public class programaProyecto {
                         System.out.print("Ingrese el nombre del cine al que pertenece la sala (tiene que ser uno de los de arriba): ");
                         nom_cine = e.nextLine();
     
-                        consulta = "insert into proyecto.salas (num_sala, cant_butacas, nom_cine) values (" + num_sala + ", " + cant_butacas + ", '" + nom_cine + "')";
+                        consulta = "insert into proyecto.salas (cant_butacas, nom_cine) values (" + cant_butacas + ", '" + nom_cine + "')";
                         enviador = conexion.prepareStatement(consulta);
                         enviador.executeUpdate();
                         break;
                     case 3:
-                        cines(conexion);
+                        consulta = "select * from proyecto.cine order by nom_cine";
+                        enviador = conexion.prepareStatement(consulta);
+                        resultado = enviador.executeQuery();
+                        while (resultado.next()) {
+                            nom_cine = resultado.getString("nom_cine");
+                            telefono = resultado.getString("telefono");
+                            direccion = resultado.getString("direccion");
+                            System.out.println("Cine: " + nom_cine + "\n");
+                            System.out.println("        Telefono: " + telefono);
+                            System.out.println("        Direccion: " + direccion + "\n");
+                        }
                         break;
                     case 4:
-                        consulta = "select nom_cine, num_sala from proyecto.cine natural join proyecto.salas order by nom_cine, num_sala";
+                        consulta = "select nom_cine, num_sala, cant_butacas from proyecto.cine natural join proyecto.salas order by nom_cine, num_sala";
                         enviador = conexion.prepareStatement(consulta);
                         resultado = enviador.executeQuery();
                         while (resultado.next()) {
@@ -98,7 +104,8 @@ public class programaProyecto {
                                 System.out.println("Cine: " + nom_cine + "\n");
                             }
                             num_sala = resultado.getInt("num_sala");
-                            System.out.println("        Numero de Sala: " + num_sala + "\n");
+                            cant_butacas = resultado.getInt("cant_butacas");
+                            System.out.println("        Numero de Sala: " + num_sala + "    Cantidad de butacas: " + cant_butacas + "\n");
                         }
                         break;
                     case 5:
@@ -138,20 +145,6 @@ public class programaProyecto {
             System.out.println(i + "- " + nom_cine);
             i++;
         }
-    }
-
-    private static void salas(Connection conexion) throws SQLException {
-        String consulta = "select num_sala from proyecto.salas";
-        PreparedStatement enviador = conexion.prepareStatement(consulta);
-        ResultSet resultado = enviador.executeQuery();
-        String cadena = "";
-
-        while (resultado.next()) {
-            int num_sala = resultado.getInt("num_sala");
-            cadena += num_sala + " | ";
-        }
-        System.out.println("Estos son las salas cargadas: ");
-        System.out.print(cadena + "\n");
     }
 }
 

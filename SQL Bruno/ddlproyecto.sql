@@ -17,7 +17,7 @@ create domain proyecto.clasificaciones as varchar(3)
 --Creamos la tabla Peliculas
 drop table if exists proyecto.peliculas cascade;
 create table proyecto.peliculas (
-	id_p			proyecto.intpositivo,
+	id_p			serial not null,
 	t_distribucion	varchar(50),
 	t_original		varchar(50),
 	t_español		varchar(50),
@@ -51,8 +51,8 @@ create trigger "proyecto.trigger_titulomayuscula"
 --Creamos la tabla Mpais
 drop table if exists proyecto.mpais cascade;
 create table proyecto.mpais (
-	id_p		proyecto.intpositivo,
-	pais		varchar(50),
+	id_p		serial not null,
+	pais		varchar(50) not null,
 
 	constraint pkmpais primary key (id_p, pais),
 	constraint fkmpais_peliculas foreign key (id_p) references proyecto.peliculas on delete cascade on update cascade
@@ -131,23 +131,23 @@ create table proyecto.cine (
 --Creamos la tabla Salas
 drop table if exists proyecto.salas cascade;
 create table proyecto.salas (
-	num_sala		proyecto.intpositivo,
+	num_sala		serial not null,
 	cant_butacas	int,
-	nom_cine		varchar(50) not null,
+	nom_cine		text not null,
 
 	constraint pksalas primary key (num_sala),
-	constraint fksalas_cine foreign key (nom_cine) references proyecto.cine,
+	constraint fksalas_cine foreign key (nom_cine) references proyecto.cine on delete cascade on update cascade,
 	constraint check_butacas check (cant_butacas >= 0)
 );
 
 --Creamos la tabla Funciones
 drop table if exists proyecto.funciones cascade;
 create table proyecto.funciones (
-	cod_fun			proyecto.intpositivo,
+	cod_fun			serial not null,
 	fecha			date,
 	h_comienzo 		time,
-	id_p			proyecto.intpositivo,
-	num_sala		proyecto.intpositivo,
+	id_p			serial not null,
+	num_sala		serial not null,
 
 	constraint pkfunciones primary key (cod_fun),
 	constraint fkfunciones_peliculas foreign key (id_p) references proyecto.peliculas on delete cascade on update cascade,
@@ -157,7 +157,7 @@ create table proyecto.funciones (
 --Creamos la tabla Dirige
 drop table if exists proyecto.dirige cascade;
 create table proyecto.dirige (
-	id_p		proyecto.intpositivo,
+	id_p		serial not null,
 	dni			proyecto.intpositivo,
 
 	constraint pkdirige primary key (id_p, dni),
@@ -168,7 +168,7 @@ create table proyecto.dirige (
 --Creamos la tabla Protagoniza
 drop table if exists proyecto.protagoniza cascade;
 create table proyecto.protagoniza (
-	id_p		proyecto.intpositivo,
+	id_p		serial not null,
 	dni			proyecto.intpositivo,
 
 	constraint pkprotagoniza primary key (id_p, dni),
@@ -179,7 +179,7 @@ create table proyecto.protagoniza (
 --Creamos la tabla Reparto
 drop table if exists proyecto.reparto cascade;
 create table proyecto.reparto (
-	id_p		proyecto.intpositivo,
+	id_p		serial not null,
 	dni			proyecto.intpositivo,
 
 	constraint pkreparto primary key (id_p, dni),
@@ -234,7 +234,7 @@ create trigger "proyecto.trigger_cantpeliculasactuadasreparto"
 --Creamos la tabla Auditoria
 drop table if exists proyecto.auditoria;
 create table proyecto.auditoria (
-	id_p	proyecto.intpositivo,
+	id_p	serial not null,
    	fecha_realizacion date,
 	hora_realizacion time,
 	f_estreno	date,
