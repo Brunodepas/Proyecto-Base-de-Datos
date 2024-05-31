@@ -30,7 +30,8 @@ create table proyecto.peliculas (
 	f_estreno_Arg	date,
 	resumen			text,
 
-	constraint pkpeliculas primary key (id_p)
+	constraint pkpeliculas primary key (id_p),
+	constraint checkid_p check (id_p > 0)
 );
 
 --Creamos un trigger que ponga los t_original en mayusculas
@@ -137,6 +138,7 @@ create table proyecto.salas (
 
 	constraint pksalas primary key (num_sala),
 	constraint fksalas_cine foreign key (nom_cine) references proyecto.cine on delete cascade on update cascade,
+	constraint checknum_sala check (num_sala > 0),
 	constraint check_butacas check (cant_butacas >= 0)
 );
 
@@ -150,6 +152,7 @@ create table proyecto.funciones (
 	num_sala		serial not null,
 
 	constraint pkfunciones primary key (cod_fun),
+	constraint checkcod_fun check (cod_fun > 0),
 	constraint fkfunciones_peliculas foreign key (id_p) references proyecto.peliculas on delete cascade on update cascade,
 	constraint fkfunciones_salas foreign key (num_sala) references proyecto.salas on delete cascade on update cascade
 );

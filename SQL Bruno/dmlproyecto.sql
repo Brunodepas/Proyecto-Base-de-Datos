@@ -75,54 +75,54 @@ values
 --Insertamos datos en la tabla Protagoniza
 insert into proyecto.protagoniza (id_p, dni)
 values
-    (1, 10), -- Shameik Moore
-    (2, 1),  -- Tom Holland
-    (2, 2),  -- Zendaya
-    (3, 1),  -- Tom Holland
-    (3, 2),  -- Zendaya
-    (3, 3),  -- Jake Gyllenhaal
-    (4, 4),  -- Tobey Maguire
-    (4, 5),  -- Kirsten Dunst
-    (5, 4),  -- Tobey Maguire
-    (5, 5),  -- Kirsten Dunst
-    (6, 4),  -- Tobey Maguire
-    (6, 5),  -- Kirsten Dunst
-    (6, 16), -- James Franco
-    (7, 1),  -- Tom Holland
-    (7, 2),  -- Zendaya
-    (7, 9);  -- Alfred Molina
+    (1, 10),
+    (2, 1),
+    (2, 2),
+    (3, 1),
+    (3, 2),
+    (3, 3),
+    (4, 4),
+    (4, 5),
+    (5, 4),
+    (5, 5),
+    (6, 4),
+    (6, 5),
+    (6, 16),
+    (7, 1),
+    (7, 2),
+    (7, 9);
 
 --Insertamos datos en la tabla Dirige
 insert into proyecto.dirige (id_p, dni)
 values
-    (1, 11), -- Bob Persichetti
-    (1, 12), -- Peter Ramsey
-    (1, 13), -- Rodney Rothman
-    (2, 14), -- Jon Watts
-    (4, 15), -- Sam Raimi
-    (5, 15), -- Sam Raimi
-    (6, 15), -- Sam Raimi
-    (7, 14), -- Jon Watts
+    (1, 11),
+    (1, 12),
+    (1, 13),
+    (2, 14),
+    (4, 15),
+    (5, 15),
+    (6, 15),
+    (7, 14),
 	(7, 1);
 
 --Insertamos datos en la tabla Reparto
 insert into proyecto.reparto (id_p, dni)
 values
-    (1, 17), -- Hailee Steinfeld
-    (1, 18), -- Mahershala Ali
-    (1, 19), -- Liev Schreiber
-    (2, 2),  -- Zendaya
-    (3, 2),  -- Zendaya
-    (3, 3),  -- Jake Gyllenhaal
-    (4, 8),  -- Willem Dafoe
-    (4, 16), -- James Franco
-    (5, 9),  -- Alfred Molina
-    (5, 16), -- James Franco
-    (6, 16), -- James Franco
-    (7, 8),  -- Willem Dafoe
-    (7, 6),  -- Andrew Garfield
-    (7, 4),  -- Tobey Maguire
-    (7, 7);  -- Emma Stone
+    (1, 17),
+    (1, 18),
+    (1, 19),
+    (2, 2),
+    (3, 2),
+    (3, 3),
+    (4, 8),
+    (4, 16),
+    (5, 9),
+    (5, 16),
+    (6, 16),
+    (7, 8),
+    (7, 6),
+    (7, 4),
+    (7, 7);
 
 --Insertamos datos en la tabla Cine
 insert into proyecto.cine (nom_cine, telefono, direccion)
