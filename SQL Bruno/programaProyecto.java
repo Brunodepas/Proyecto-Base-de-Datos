@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 
+
 public class programaProyecto {
 
     public static void main(String[] args) {
@@ -64,10 +65,15 @@ public class programaProyecto {
                         telefono = e.nextLine();
                         System.out.print("Ingrese la direccion del cine: ");
                         direccion = e.nextLine();
+                        try {
+                            consulta = "insert into proyecto.cine (nom_cine, telefono, direccion) values ('" + nom_cine + "', '" + telefono + "', '" + direccion + "')";
+                            enviador = conexion.prepareStatement(consulta);
+                            enviador.executeUpdate();
+                            System.out.println("Cine cargado con exito");
+                        } catch (Exception p) {
+                            System.out.println("Error Cine duplicado");
+                        }
     
-                        consulta = "insert into proyecto.cine (nom_cine, telefono, direccion) values ('" + nom_cine + "', '" + telefono + "', '" + direccion + "')";
-                        enviador = conexion.prepareStatement(consulta);
-                        enviador.executeUpdate();
                         break;
                     case 2:
                         System.out.print("Ingrese la cantidad de butacas de la sala: ");
@@ -76,10 +82,25 @@ public class programaProyecto {
                         cines(conexion);
                         System.out.print("Ingrese el nombre del cine al que pertenece la sala (tiene que ser uno de los de arriba): ");
                         nom_cine = e.nextLine();
-    
-                        consulta = "insert into proyecto.salas (cant_butacas, nom_cine) values (" + cant_butacas + ", '" + nom_cine + "')";
+                        consulta = "select nom_cine from proyecto.cine where (nom_cine = '" + nom_cine + "')";
                         enviador = conexion.prepareStatement(consulta);
-                        enviador.executeUpdate();
+                        resultado = enviador.executeQuery();
+                        try {
+                            if (resultado.next()) {
+                                conexion.setAutoCommit(false);
+                                consulta = "insert into proyecto.salas (cant_butacas, nom_cine) values (" + cant_butacas + ", '" + nom_cine + "')";
+                                enviador = conexion.prepareStatement(consulta);
+                                enviador.executeUpdate();
+                                conexion.commit();
+                                System.out.println("Sala cargada con exito");
+                            } else {
+                                conexion.rollback();
+                                break;
+                                }
+                        } catch (Exception p) {
+                            System.out.println("Error al Cargar sala");
+                        }
+                        conexion.setAutoCommit(true);
                         break;
                     case 3:
                         consulta = "select * from proyecto.cine order by nom_cine";
